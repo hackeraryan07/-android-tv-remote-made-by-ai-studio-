@@ -13,7 +13,7 @@ import javax.net.ssl.X509TrustManager
 import javax.security.auth.x500.X500Principal
 
 class TlsManager {
-    private val keyAlias = "AndroidTvRemoteKey"
+    private val keyAlias = "AndroidTvRemoteKey2"
     private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
 
     init {
@@ -26,11 +26,12 @@ class TlsManager {
         val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore")
         val parameterSpec = KeyGenParameterSpec.Builder(
             keyAlias,
-            KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
+            KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY or KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         )
             .setCertificateSubject(X500Principal("CN=Android TV Remote"))
-            .setDigests(KeyProperties.DIGEST_SHA256)
-            .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
+            .setDigests(KeyProperties.DIGEST_NONE, KeyProperties.DIGEST_MD5, KeyProperties.DIGEST_SHA1, KeyProperties.DIGEST_SHA224, KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA512)
+            .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1, KeyProperties.SIGNATURE_PADDING_RSA_PSS)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1, KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
             .setKeySize(2048)
             .build()
         kpg.initialize(parameterSpec)

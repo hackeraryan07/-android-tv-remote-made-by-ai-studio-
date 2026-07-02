@@ -1,0 +1,25 @@
+{
+    "cSpell.words": [
+        "aiofiles",
+        "androidtv",
+        "androidtvremote",
+        "atvremote",
+        "DPAD",
+        "fugu",
+        "grpcio",
+        "isort",
+        "Isrc",
+        "mypy",
+        "peername",
+        "proto",
+        "protobuf",
+        "protoc",
+        "pynput",
+        "pytest",
+        "remotemessage",
+        "selfsigned",
+        "Varint",
+        "venv",
+        "zeroconf"
+    ]
+}

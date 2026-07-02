@@ -1,0 +1,6 @@
+{
+  "name": "Google TV Remote",
+  "description": "An Android application that turns a smartphone into a fully functional remote control for Android TV / Google TV devices.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

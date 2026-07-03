@@ -77,6 +77,8 @@ googleServices {
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.
 dependencies {
+  implementation(libs.bouncycastle.bcpkix)
+  implementation(libs.bouncycastle.bcprov)
   implementation(libs.kotlinx.serialization.protobuf)
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.firebase.bom))

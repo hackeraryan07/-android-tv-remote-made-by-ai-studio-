@@ -38,7 +38,7 @@ class PairingClient(
             protocolVersion = 2,
             status = OuterMessage.STATUS_OK,
             pairingRequest = PairingRequest(
-                serviceName = "androidtvremote", // Will verify
+                serviceName = "atvremote", // Will verify
                 clientName = clientName
             )
         )
@@ -81,6 +81,10 @@ class PairingClient(
         val clientCert = tlsManager.getClientCertificate()
 
         val secretHash = CryptoUtil.computePairingSecret(clientCert, serverCert, code)
+        val expectedFirstByte = code.substring(0, 2).toInt(16).toByte()
+        if (secretHash[0] != expectedFirstByte) {
+            throw Exception("Wrong pairing code (hash mismatch)")
+        }
 
         val secretMsg = OuterMessage(
             protocolVersion = 2,

@@ -21,20 +21,20 @@ object CryptoUtil {
         h.update(getModulusOrExponentBytes(clientExponent, true))
         h.update(getModulusOrExponentBytes(serverModulus))
         h.update(getModulusOrExponentBytes(serverExponent, true))
-
+        
         // Code is 6 hex characters. Last 4 characters are used.
         val codeBytes = code.substring(2).chunked(2).map { it.toInt(16).toByte() }.toByteArray()
         h.update(codeBytes)
-
+        
         return h.digest()
     }
 
     private fun getModulusOrExponentBytes(bigInt: BigInteger, prependZero: Boolean = false): ByteArray {
         var hex = bigInt.toString(16).uppercase()
         if (prependZero) {
-            hex = "0\$hex"
+            hex = "0" + hex
         } else if (hex.length % 2 != 0) {
-            hex = "0\$hex"
+            hex = "0" + hex
         }
         return hex.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
     }

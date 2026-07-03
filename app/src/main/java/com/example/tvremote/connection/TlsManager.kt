@@ -23,7 +23,6 @@ import javax.security.auth.x500.X500Principal
 class TlsManager(private val context: Context) {
     private val keyAlias = "AndroidTvRemoteKey"
     
-    // Lazy initialization of the KeyStore to avoid blocking the main thread on startup
     private val keyStore: KeyStore by lazy {
         KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
     }
@@ -35,19 +34,19 @@ class TlsManager(private val context: Context) {
     }
 
     private fun generateKey() {
-        // Delete old key if any
         if (keyStore.containsAlias(keyAlias)) {
             keyStore.deleteEntry(keyAlias)
         }
 
-        // Use EC (Elliptic Curve) to avoid RSA padding issues with Conscrypt
-        val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore")
+        val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore")
         val parameterSpec = KeyGenParameterSpec.Builder(
             keyAlias,
             KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
         )
             .setCertificateSubject(X500Principal("CN=Android TV Remote"))
             .setDigests(KeyProperties.DIGEST_NONE, KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA512)
+            .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
+            .setKeySize(2048)
             .build()
             
         kpg.initialize(parameterSpec)

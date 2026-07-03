@@ -37,6 +37,9 @@ class TvRemoteViewModel(application: Application) : AndroidViewModel(application
     private val prefs = application.getSharedPreferences("tv_remote_prefs", Context.MODE_PRIVATE)
 
     init {
+        viewModelScope.launch {
+            tlsManager.initialize()
+        }
         startScanning()
     }
 

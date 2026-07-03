@@ -1,5 +1,4 @@
 [versions]
-bouncycastle = "1.70"
 agp = "9.1.1"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -44,8 +43,6 @@ googleServices = "4.5.0"
 kotlinxSerialization = "1.7.3"
 
 [libraries]
-bouncycastle-bcpkix = { group = "org.bouncycastle", name = "bcpkix-jdk15on", version.ref = "bouncycastle" }
-bouncycastle-bcprov = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bouncycastle" }
 kotlinx-serialization-protobuf = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

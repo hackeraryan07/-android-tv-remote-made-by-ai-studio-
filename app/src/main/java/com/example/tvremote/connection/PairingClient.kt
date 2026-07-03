@@ -35,20 +35,20 @@ class PairingClient(
         socket?.connect()
 
         val req = OuterMessage(
-            protocolVersion = 1,
+            protocolVersion = 2,
             status = OuterMessage.STATUS_OK,
             pairingRequest = PairingRequest(
-                serviceName = "atvremote", // Will verify
+                serviceName = "androidtvremote", // Will verify
                 clientName = clientName
             )
         )
         socket?.sendMessage(req)
         
         val ack = socket?.readMessage()
-        if (ack?.status != OuterMessage.STATUS_OK) throw Exception("Pairing request failed")
+        if (ack?.status != OuterMessage.STATUS_OK) throw Exception("Pairing request failed with status ${ack?.status}")
 
         val options = OuterMessage(
-            protocolVersion = 1,
+            protocolVersion = 2,
             status = OuterMessage.STATUS_OK,
             options = Options(
                 inputEncodings = listOf(Options.Encoding(type = Options.ENCODING_TYPE_HEXADECIMAL, symbolLength = 6)),
@@ -61,7 +61,7 @@ class PairingClient(
         if (optionsAck?.status != OuterMessage.STATUS_OK) throw Exception("Options failed")
 
         val configuration = OuterMessage(
-            protocolVersion = 1,
+            protocolVersion = 2,
             status = OuterMessage.STATUS_OK,
             configuration = Configuration(
                 encoding = Options.Encoding(type = Options.ENCODING_TYPE_HEXADECIMAL, symbolLength = 6),
@@ -83,7 +83,7 @@ class PairingClient(
         val secretHash = CryptoUtil.computePairingSecret(clientCert, serverCert, code)
 
         val secretMsg = OuterMessage(
-            protocolVersion = 1,
+            protocolVersion = 2,
             status = OuterMessage.STATUS_OK,
             secret = Secret(secret = secretHash)
         )

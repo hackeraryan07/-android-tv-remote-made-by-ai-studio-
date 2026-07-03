@@ -25,7 +25,7 @@ sealed class RemoteState {
 
 class TvRemoteViewModel(application: Application) : AndroidViewModel(application) {
     private val tvScanner = TvScanner(application)
-    private val tlsManager = TlsManager()
+    private val tlsManager = TlsManager(application)
     
     private val _state = MutableStateFlow<RemoteState>(RemoteState.Scanning)
     val state: StateFlow<RemoteState> = _state.asStateFlow()

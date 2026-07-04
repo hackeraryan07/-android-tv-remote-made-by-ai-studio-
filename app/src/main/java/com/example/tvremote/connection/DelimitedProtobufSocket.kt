@@ -26,7 +26,7 @@ class DelimitedProtobufSocket<T, R>(
 
     fun connect() {
         socket = socketFactory.createSocket() as SSLSocket
-        socket?.connect(InetSocketAddress(host, port), 5000)
+        socket?.connect(InetSocketAddress(host, port), 15000)
         socket?.startHandshake()
         input = socket?.inputStream
         output = socket?.outputStream

@@ -28,8 +28,12 @@ class TlsManager(private val context: Context) {
     }
 
     suspend fun initialize() = withContext(Dispatchers.IO) {
-        if (!keyStore.containsAlias(keyAlias)) {
-            generateKey()
+        try {
+            if (!keyStore.containsAlias(keyAlias)) {
+                generateKey()
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("TlsManager", "Failed to initialize key", e)
         }
     }
 

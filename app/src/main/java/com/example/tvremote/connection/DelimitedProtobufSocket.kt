@@ -28,7 +28,8 @@ class DelimitedProtobufSocket<T, R>(
         socket = socketFactory.createSocket() as SSLSocket
         socket?.connect(InetSocketAddress(host, port), 15000)
         socket?.startHandshake()
-        input = socket?.inputStream
+        // Buffered to significantly reduce syscall overhead during byte-by-byte protobuf varint parsing
+        input = socket?.inputStream?.buffered()
         output = socket?.outputStream
     }
 
